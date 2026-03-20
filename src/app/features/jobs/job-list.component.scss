@@ -147,3 +147,93 @@
 
   a { color: #534AB7; text-decoration: none; font-weight: 500; }
 }
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+  background: #f4f4f2;
+}
+
+.sidebar {
+  background: #1e1b3a;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+
+  &__brand {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.08em;
+    margin-bottom: 40px;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.nav-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #9d9bb8;
+  text-decoration: none;
+  transition: all 0.15s;
+
+  &:hover  { background: rgba(255,255,255,0.07); color: #fff; }
+  &.active { background: rgba(255,255,255,0.12); color: #fff; }
+
+  &--add {
+    margin-top: 12px;
+    background: #534AB7;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    &:hover { background: #3C3489; }
+  }
+}
+
+.username {
+  font-size: 12px;
+  color: #9d9bb8;
+  padding: 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-signout {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  color: #9d9bb8;
+  font-size: 13px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  &:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+}
+
+.main {
+  padding: 36px 40px;
+}
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 24px 16px; }
+}

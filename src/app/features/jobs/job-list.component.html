@@ -1,63 +1,88 @@
-<div class="page">
+<div class="layout">
 
-  <div class="page-header">
-    <h2>My Applications</h2>
-    <button class="btn-primary" (click)="goToAdd()">+ Add Job</button>
-  </div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">JOBFLOW</div>
 
-  <div class="filter-tabs">
-    <button
-      *ngFor="let s of statuses"
-      [class.active]="filterStatus === s.value"
-      (click)="filterStatus = s.value"
-      class="tab">
-      {{ s.label }}
-    </button>
-  </div>
+    <nav class="sidebar__nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        Dashboard
+      </a>
+      <a routerLink="/jobs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+        Applications
+      </a>
+      <a routerLink="/jobs/new" class="nav-item nav-item--add">
+        + Add Job
+      </a>
+    </nav>
 
-  <div class="loading" *ngIf="loading$ | async">Loading...</div>
+    <div class="sidebar__footer">
+      <span class="username">{{ userName$ | async }}</span>
+      <button class="btn-signout" (click)="onSignOut()">Sign out</button>
+    </div>
+  </aside>
 
-  <ng-container *ngIf="jobs$ | async as jobs">
-    <div *ngIf="filterJobs(jobs).length === 0" class="empty">
-      No applications found.
-      <a routerLink="/jobs/new">Add your first one.</a>
+  <!-- Main content -->
+  <main class="main">
+
+    <div class="page-header">
+      <h2>My Applications</h2>
     </div>
 
-    <div class="job-grid">
-      <div
-        class="job-card"
-        *ngFor="let job of filterJobs(jobs); trackBy: trackById">
+    <div class="filter-tabs">
+      <button
+        *ngFor="let s of statuses"
+        [class.active]="filterStatus === s.value"
+        (click)="filterStatus = s.value"
+        class="tab">
+        {{ s.label }}
+      </button>
+    </div>
 
-        <div class="job-card__header">
-          <div>
-            <h3>{{ job.role }}</h3>
-            <p class="company">{{ job.company }}</p>
-            <p class="location" *ngIf="job.location">{{ job.location }}</p>
-          </div>
-          <span [class]="statusClass(job.status)">{{ job.status }}</span>
-        </div>
+    <div class="loading" *ngIf="loading$ | async">Loading...</div>
 
-        <p class="notes" *ngIf="job.notes">{{ job.notes }}</p>
-
-        <div class="job-card__footer">
-          <span class="date">{{ job.applied_at | date: 'MMM d, y' }}</span>
-          <div class="actions">
-            <select
-              [value]="job.status"
-              (change)="onStatusChange(job.id, $event)"
-              class="status-select">
-              <option value="applied">Applied</option>
-              <option value="interview">Interview</option>
-              <option value="offer">Offer</option>
-              <option value="rejected">Rejected</option>
-            </select>
-            <a [routerLink]="['/jobs', job.id, 'edit']" class="btn-edit">Edit</a>
-            <button (click)="onDelete(job.id)" class="btn-delete">Delete</button>
-          </div>
-        </div>
-
+    <ng-container *ngIf="jobs$ | async as jobs">
+      <div *ngIf="filterJobs(jobs).length === 0" class="empty">
+        No applications found.
+        <a routerLink="/jobs/new">Add your first one.</a>
       </div>
-    </div>
-  </ng-container>
 
+      <div class="job-grid">
+        <div
+          class="job-card"
+          *ngFor="let job of filterJobs(jobs); trackBy: trackById">
+
+          <div class="job-card__header">
+            <div>
+              <h3>{{ job.role }}</h3>
+              <p class="company">{{ job.company }}</p>
+              <p class="location" *ngIf="job.location">{{ job.location }}</p>
+            </div>
+            <span [class]="statusClass(job.status)">{{ job.status }}</span>
+          </div>
+
+          <p class="notes" *ngIf="job.notes">{{ job.notes }}</p>
+
+          <div class="job-card__footer">
+            <span class="date">{{ job.applied_at | date: 'MMM d, y' }}</span>
+            <div class="actions">
+              <select
+                [value]="job.status"
+                (change)="onStatusChange(job.id, $event)"
+                class="status-select">
+                <option value="applied">Applied</option>
+                <option value="interview">Interview</option>
+                <option value="offer">Offer</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <a [routerLink]="['/jobs', job.id, 'edit']" class="btn-edit">Edit</a>
+              <button (click)="onDelete(job.id)" class="btn-delete">Delete</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+
+  </main>
 </div>

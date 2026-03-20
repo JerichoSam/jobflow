@@ -1,25 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { JobsService } from '../../core/services/job.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Job, JobStatus } from '../../core/models/job.model';
 
 @Component({
   selector: 'app-job-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './job-list.component.html',
   styleUrl: './job-list.component.scss'
 })
 export class JobListComponent implements OnInit {
 
   private jobsService = inject(JobsService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   jobs$: Observable<Job[]> = this.jobsService.jobs$;
   loading$: Observable<boolean> = this.jobsService.loading$;
+
+  userName$ = this.authService.currentUser$.pipe(
+    map(user => user?.email?.split('@')[0] ?? 'there')
+  );
 
   filterStatus: JobStatus | 'all' = 'all';
 
@@ -60,6 +67,10 @@ export class JobListComponent implements OnInit {
 
   goToAdd(): void {
     this.router.navigate(['/jobs/new']);
+  }
+
+  async onSignOut(): Promise<void> {
+    await this.authService.signOut();
   }
 
   trackById(_: number, job: Job): string {
