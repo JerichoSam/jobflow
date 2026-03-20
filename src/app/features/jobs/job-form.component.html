@@ -1,0 +1,62 @@
+<div class="page">
+  <div class="form-card">
+
+    <h2>{{ isEditMode ? 'Edit Application' : 'Add Application' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Company *</label>
+          <input formControlName="company" placeholder="e.g. Google"
+            [class.is-invalid]="company.invalid && company.touched"/>
+          <span class="error" *ngIf="company.invalid && company.touched">Required</span>
+        </div>
+
+        <div class="form-group">
+          <label>Role *</label>
+          <input formControlName="role" placeholder="e.g. Frontend Developer"
+            [class.is-invalid]="role.invalid && role.touched"/>
+          <span class="error" *ngIf="role.invalid && role.touched">Required</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="status">
+            <option *ngFor="let s of statusOptions" [value]="s">
+              {{ s | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input formControlName="location" placeholder="e.g. Remote, Manila"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Salary Range</label>
+        <input formControlName="salary" placeholder="e.g. ₱60,000 – ₱80,000"/>
+      </div>
+
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea formControlName="notes" rows="4"
+          placeholder="Recruiter name, interview notes, next steps..."></textarea>
+      </div>
+
+      <div class="server-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          {{ isLoading ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Add Application') }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

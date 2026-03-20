@@ -1,0 +1,116 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">JOBFLOW</div>
+
+    <nav class="sidebar__nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        Dashboard
+      </a>
+      <a routerLink="/jobs" routerLinkActive="active" class="nav-item">
+        Applications
+      </a>
+      <a routerLink="/jobs/new" class="nav-item nav-item--add">
+        + Add Job
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <span class="username">{{ userName$ | async }}</span>
+      <button class="btn-signout" (click)="onSignOut()">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p class="subtitle">Welcome back, {{ userName$ | async }}</p>
+      </div>
+    </div>
+
+    <ng-container *ngIf="stats$ | async as stats">
+
+      <!-- Stat cards -->
+      <div class="stat-grid">
+
+        <div class="stat-card stat-card--total">
+          <span class="stat-card__value">{{ stats.total }}</span>
+          <span class="stat-card__label">Total applications</span>
+        </div>
+
+        <div
+          *ngFor="let card of statCards"
+          class="stat-card stat-card--{{ card.color }}">
+          <span class="stat-card__value">{{ stats[card.key] }}</span>
+          <span class="stat-card__label">{{ card.label }}</span>
+        </div>
+
+        <div class="stat-card stat-card--rate">
+          <span class="stat-card__value">{{ getResponseRate(stats) }}%</span>
+          <span class="stat-card__label">Response rate</span>
+        </div>
+
+      </div>
+
+      <!-- Progress bars -->
+      <div class="section">
+        <h2 class="section-title">Application breakdown</h2>
+        <div class="progress-list">
+
+          <div class="progress-row" *ngFor="let card of statCards">
+            <span class="progress-row__label">{{ card.label }}</span>
+            <div class="progress-track">
+              <div
+                class="progress-fill progress-fill--{{ card.color }}"
+                [style.width]="getBarWidth(stats[card.key], stats.total)">
+              </div>
+            </div>
+            <span class="progress-row__count">{{ stats[card.key] }}</span>
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+
+    <!-- Recent applications -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Recent applications</h2>
+        <a routerLink="/jobs" class="view-all">View all</a>
+      </div>
+
+      <div class="loading" *ngIf="loading$ | async">Loading...</div>
+
+      <ng-container *ngIf="recentJobs$ | async as jobs">
+        <div class="empty" *ngIf="jobs.length === 0">
+          No applications yet.
+          <a routerLink="/jobs/new">Add your first one.</a>
+        </div>
+
+        <div class="recent-list">
+          <div class="recent-row" *ngFor="let job of jobs">
+            <div class="recent-row__info">
+              <span class="recent-row__role">{{ job.role }}</span>
+              <span class="recent-row__company">{{ job.company }}</span>
+            </div>
+            <div class="recent-row__meta">
+              <span class="recent-row__date">
+                {{ job.applied_at | date: 'MMM d' }}
+              </span>
+              <span [class]="statusClass(job.status)">{{ job.status }}</span>
+              <a [routerLink]="['/jobs', job.id, 'edit']" class="edit-link">
+                Edit
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </main>
+</div>

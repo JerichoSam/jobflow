@@ -1,0 +1,149 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h2 { font-size: 22px; font-weight: 500; margin: 0; }
+}
+
+.btn-primary {
+  background: #534AB7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover { background: #3C3489; }
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 6px 16px;
+  border: 1px solid #d3d1c7;
+  border-radius: 20px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #5F5E5A;
+
+  &:hover  { border-color: #534AB7; color: #534AB7; }
+  &.active { background: #534AB7; color: #fff; border-color: #534AB7; }
+}
+
+.job-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.job-card {
+  background: #fff;
+  border: 1px solid #e0dfd8;
+  border-radius: 12px;
+  padding: 20px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+
+    h3 { font-size: 16px; font-weight: 500; margin: 0 0 4px; }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #f1efe8;
+  }
+}
+
+.company  { font-size: 14px; color: #5F5E5A; margin: 0; }
+.location { font-size: 12px; color: #888780; margin: 4px 0 0; }
+.notes    { font-size: 13px; color: #888780; margin: 0; }
+.date     { font-size: 12px; color: #888780; }
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.status-select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #d3d1c7;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.btn-edit {
+  font-size: 12px;
+  color: #534AB7;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid #534AB7;
+  border-radius: 6px;
+  &:hover { background: #EEEDFE; }
+}
+
+.btn-delete {
+  font-size: 12px;
+  color: #A32D2D;
+  background: none;
+  border: 1px solid #F09595;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  &:hover { background: #FCEBEB; }
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  &--applied   { background: #E6F1FB; color: #0C447C; }
+  &--interview { background: #FAEEDA; color: #633806; }
+  &--offer     { background: #EAF3DE; color: #27500A; }
+  &--rejected  { background: #FCEBEB; color: #791F1F; }
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #888780;
+  font-size: 14px;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888780;
+  font-size: 14px;
+
+  a { color: #534AB7; text-decoration: none; font-weight: 500; }
+}
